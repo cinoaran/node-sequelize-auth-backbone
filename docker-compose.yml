@@ -1,0 +1,42 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:11'
+    container_name: 'POSTGRES-11'
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    depends_on:
+      - 'pgadmin'
+  api-service:
+    build: .
+    ports:
+      - '5000:5000'
+    restart: on-failure
+    container_name: 'APP-NODE12'
+    volumes:
+      - .:/usr/src/drive-walk-api
+    env_file:
+      - .env
+  api-client:
+    container_name: 'CLIENT-NODE10'
+    build:
+      context: ./client
+    restart: on-failure
+    stdin_open: true
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./client:/usr/src/drive-walk-api/client
+    depends_on:
+      - 'api-service'
+  pgadmin:
+    image: 'dpage/pgadmin4'
+    container_name: 'PGADMIN-4'
+    ports:
+      - '5050:80'
+    env_file:
+      - .env
