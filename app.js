@@ -15,7 +15,6 @@ const initClient = require('./helpers/initClient');
 db.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
-    // app.listen(PORT, console.log(`Running on port: ${PORT}`));
   })
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
@@ -61,7 +60,7 @@ app.use((err, req, res, next) => {
     },
   });
 });
-/* db.sync({ force: true }) */
+/*db.sync({ force: true }) */
 db.sync()
   .then((result) => {
     app.listen(PORT, console.log(`Running on port: ${PORT}`));
