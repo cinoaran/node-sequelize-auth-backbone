@@ -19,14 +19,14 @@ module.exports = {
       clientRange,
     } = req.value.body;
 
-    const newAddress = new Address({
+    const newAddress = Address.build({
       addressStreet,
       addressZip,
       addressCity,
       addressCountry,
     });
 
-    const newClient = new Client({
+    const newClient = Client.build({
       clientKey,
       clientCompany,
       clientPerson,
@@ -36,9 +36,9 @@ module.exports = {
       clientMobile,
       clientRange,
     });
-    await Address.create({ newAddress });
+    await newAddress.save();
     res.json({ address: 'created' });
-    await Client.create({ newClient });
+    await newClient.save();
     res.json({ client: 'created' });
   },
   all: async (req, res, next) => {
