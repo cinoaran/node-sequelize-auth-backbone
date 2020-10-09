@@ -10,10 +10,12 @@ module.exports = {
       userName,
       userPassword,
     });
+
+    await res.json(req.value.body);
   },
   signIn: async (req, res, next) => {
     // Check wether clientKey is in the users table
-    
+
 
     // If so go for token
     console.log('UsersController.signIn called!');

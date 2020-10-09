@@ -16,8 +16,7 @@ module.exports = {
     };
   },
 
-  validateBodyUser: (schema) => {
-    // Be sure req.value.body is valid and req.body is available too.
+  validateBodyUser: (schema) => {   
     return (req, res, next) => {
       if (!req.value) req.value = {};
       if (!req.value['body']) req.value['body'] = req.body;
@@ -30,8 +29,8 @@ module.exports = {
       next();
     };
   },
-  schemaUser: {
-    authSchema: Yup.object().shape({
+  schemasUser: {
+    userSchema: Yup.object().shape({
       clientKey: Yup.string().min(3).max(30).required('Client key is required'),
       userName: Yup.string().min(3).max(30).required('Username is obligatory'),
       userEmail: Yup.string()

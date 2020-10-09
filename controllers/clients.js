@@ -25,9 +25,9 @@ module.exports = {
       addressZip,
       addressCity,
       addressCountry,
-    });
-
+    });    
     const createAddress = await newAddress.save();
+    
     const newClient = Client.build({
       clientKey,
       clientCompany,
@@ -48,5 +48,5 @@ module.exports = {
   },
   one: async (req, res, next) => {
     console.log('UsersController.secret called!');
-  },
+  }
 };

@@ -3,14 +3,14 @@ const router = require('express-promise-router')();
 
 const {
   validateBodyUser,
-  schemaUser,
+  schemasUser,
 } = require('../helpers/yup_validation/routeHelpersUser');
 
 const UsersController = require('../controllers/users');
 
 router
   .route('/signup')
-  .post(validateBodyUser(schemaUser.authSchema), UsersController.signUp);
+  .post(validateBodyUser(schemasUser.userSchema), UsersController.signUp);
 
 router.route('/signin').post(UsersController.signIn);
 
