@@ -17,6 +17,7 @@ module.exports = {
   },
 
   validateBodyUser: (schema) => {
+    // Be sure req.value.body is valid and req.body is available too.
     return (req, res, next) => {
       if (!req.value) req.value = {};
       if (!req.value['body']) req.value['body'] = req.body;

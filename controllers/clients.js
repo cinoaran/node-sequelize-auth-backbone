@@ -1,9 +1,10 @@
 const Address = require('../models/Address');
 const Client = require('../models/Client');
+const User = require('../models/User');
 
 module.exports = {
   create: async (req, res, next) => {
-    // 'Contents of req.value.body', req.value.body
+    // Contents of req.value.body, req.value.body
     const {
       addressStreet,
       addressZip,
@@ -26,6 +27,7 @@ module.exports = {
       addressCountry,
     });
 
+    const createAddress = await newAddress.save();
     const newClient = Client.build({
       clientKey,
       clientCompany,
@@ -35,11 +37,11 @@ module.exports = {
       clientFax,
       clientMobile,
       clientRange,
+      addressId: createAddress.id
     });
-    await newAddress.save();
-    res.json({ address: 'created' });
+        
     await newClient.save();
-    res.json({ client: 'created' });
+    res.json({ client: 'success', address: 'success' });
   },
   all: async (req, res, next) => {
     console.log('UsersController.signIn called!');
