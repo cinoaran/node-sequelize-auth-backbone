@@ -29,14 +29,14 @@ module.exports = {
       next();
     };
   },
-  schemasUser: {
+  authSchemas: {
     userSchema: Yup.object().shape({
-      clientKey: Yup.string().min(3).max(30).required('Client key is required'),
-      userName: Yup.string().min(3).max(30).required('Username is obligatory'),
-      userEmail: Yup.string()
+      client_key: Yup.string().min(3).max(30).required('Client key is required'),
+      user_name: Yup.string().min(3).max(30).required('Username is obligatory'),
+      user_email: Yup.string()
         .email('You have to enter valid Email address !!!')
         .required('Please provide Email address'),
-      userPassword: Yup.string()
+      user_password: Yup.string()
         .min(3)
         .max(30)
         .required(

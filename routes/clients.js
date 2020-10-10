@@ -14,6 +14,16 @@ const {
 const ClientsController = require('../controllers/clients');
 
 router
+  .route('/signup')
+  .post(
+    [
+      validateBodyAddress(schemasAddress.addressSchemas),
+      validateBodyClient(schemasClient.clientSchemas),
+    ],
+    ClientsController.signUp
+  );
+
+router
   .route('/create')
   .post(
     [

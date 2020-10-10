@@ -6,40 +6,80 @@ module.exports = {
   create: async (req, res, next) => {
     // Contents of req.value.body, req.value.body
     const {
-      addressStreet,
-      addressZip,
-      addressCity,
-      addressCountry,
-      clientKey,
-      clientCompany,
-      clientPerson,
-      clientEmail,
-      clientPhone,
-      clientFax,
-      clientMobile,
-      clientRange,
+      address_street,
+      address_zip,
+      address_city,
+      address_country, 
+      client_key,    
+      client_company,
+      client_person,
+      client_email,
+      client_phone,
+      client_fax,
+      client_mobile,
+      client_range,
     } = req.value.body;
 
     const newAddress = Address.build({
-      addressStreet,
-      addressZip,
-      addressCity,
-      addressCountry,
+      address_street,
+      address_zip,
+      address_city,
+      address_country,
     });    
     const createAddress = await newAddress.save();
     
     const newClient = Client.build({
-      clientKey,
-      clientCompany,
-      clientPerson,
-      clientEmail,
-      clientPhone,
-      clientFax,
-      clientMobile,
-      clientRange,
+      client_key,
+      client_company,
+      client_person,
+      client_email,
+      client_phone,
+      client_fax,
+      client_mobile,
+      client_range,
       addressId: createAddress.id
     });
         
+    await newClient.save();
+    res.json({ client: 'success', address: 'success' });
+  },
+  signUp: async (req, res, next) => {
+
+    // Contents of req.value.body, req.value.body from /clients/signup    
+    const {
+      address_street,
+      address_zip,
+      address_city,
+      address_country, 
+      client_key,    
+      client_company,
+      client_person,
+      client_email,
+      client_phone,
+      client_fax,
+      client_mobile,
+      client_range,
+    } = req.value.body;
+
+    const newAddress = Address.build({
+      address_street,
+      address_zip,
+      address_city,
+      address_country,
+    });    
+    
+    const createAddress = await newAddress.save();
+    const newClient = Client.build({
+      client_key,
+      client_company,
+      client_person,
+      client_email,
+      client_phone,
+      client_fax,
+      client_mobile,
+      client_range,
+      addressId: createAddress.id
+    });   
     await newClient.save();
     res.json({ client: 'success', address: 'success' });
   },

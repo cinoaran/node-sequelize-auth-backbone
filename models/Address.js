@@ -11,16 +11,16 @@ const Address = db.define(
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    addressStreet: {
+    address_street: {
       type: Sequelize.STRING,
     },
-    addressZip: {
+    address_zip: {
       type: Sequelize.STRING,
     },
-    addressCity: {
+    address_city: {
       type: Sequelize.STRING,
     },
-    addressCountry: {
+    address_country: {
       type: Sequelize.STRING,
     },
   },

@@ -1,19 +1,25 @@
+const JWT = require('jsonwebtoken');
 const User = require('../models/User');
+const Client = require('../models/Client');
+const Address = require('../models/Address');
+
 
 module.exports = {
+
   signUp: async (req, res, next) => {
-    // 'Contents of req.value.body', req.value.body
-    const { clientKey, userEmail, userName, userPassword } = req.value.body;
-    const newUser = new User({
-      clientKey,
-      userEmail,
-      userName,
-      userPassword,
+    // Contents of req.value.body, req.value.body
+  },
+
+  signIn: async (req, res, next) => {
+
+    const { client_key, user_email, user_name, user_password } = req.value.body;
+    const newUser = await new User({
+      client_key,
+      user_email,
+      user_name,
+      user_password,
     });
 
-    await res.json(req.value.body);
-  },
-  signIn: async (req, res, next) => {
     // Check wether clientKey is in the users table
 
 

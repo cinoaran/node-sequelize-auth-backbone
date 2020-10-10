@@ -3,6 +3,8 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 const Address = require('./Address');
 const User = require('./User');
+
+
 const Client = db.define(
   'client',
   {
@@ -12,28 +14,29 @@ const Client = db.define(
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    clientKey: {
+    client_key: {
+      type: Sequelize.STRING,
+      defaultValue: new Date().getTime() + '-EXT',
+    },
+    client_company: {
       type: Sequelize.STRING,
     },
-    clientCompany: {
+    client_person: {
       type: Sequelize.STRING,
     },
-    clientPerson: {
+    client_email: {
       type: Sequelize.STRING,
     },
-    clientEmail: {
+    client_phone: {
       type: Sequelize.STRING,
     },
-    clientPhone: {
+    client_fax: {
       type: Sequelize.STRING,
     },
-    clientFax: {
+    client_mobile: {
       type: Sequelize.STRING,
     },
-    clientMobile: {
-      type: Sequelize.STRING,
-    },
-    clientRange: {
+    client_range: {
       type: Sequelize.INTEGER,
       defaultValue: 300,
     },

@@ -31,19 +31,19 @@ module.exports = {
   },
   schemasAddress: {
     addressSchemas: Yup.object().shape({
-      addressStreet: Yup.string()
+      address_street: Yup.string()
         .min(2)
         .max(30)
         .required('Please enter your Street'),
-      addressZip: Yup.string()
+      address_zip: Yup.string()
         .min(2)
         .max(30)
         .required('Please enter your Zip code'),
-      addressCity: Yup.string()
+      address_city: Yup.string()
         .min(2)
         .max(30)
         .required('Please enter your City'),
-      addressCountry: Yup.string()
+      address_country: Yup.string()
         .min(2)
         .max(30)
         .required('Please enter your Country'),

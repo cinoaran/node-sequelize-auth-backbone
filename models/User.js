@@ -15,7 +15,7 @@ const User = db.define(
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    userName: {
+    user_name: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: {
@@ -23,7 +23,7 @@ const User = db.define(
         msg: 'Username already in use!',
       },
     },
-    userEmail: {
+    user_email: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: {
@@ -31,7 +31,7 @@ const User = db.define(
         msg: 'Email already in use!',
       },
     },
-    userPassword: {
+    user_password: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: {
@@ -39,7 +39,7 @@ const User = db.define(
         msg: 'Password already in use!',
       },
     },
-    userStatus: {
+    user_status: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: true,
@@ -60,7 +60,7 @@ User.beforeCreate((user, options) => {
 });
 
 User.prototype.validPassword = async function (userPassword) {
-  return await bcrypt.compare(userPassword, this.userPassword);
+  return await bcrypt.compare(user_password, this.userPassword);
 };
 
 User.belongsTo(Client, { foreignKey: 'clientId' });
