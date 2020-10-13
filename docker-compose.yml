@@ -19,6 +19,8 @@ services:
       - .:/usr/src/drive-walk-api
     env_file:
       - .env
+    depends_on:
+      - 'postgres'
   api-client:
     container_name: 'CLIENT-NODE10'
     build:

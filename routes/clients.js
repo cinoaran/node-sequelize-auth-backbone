@@ -11,6 +11,11 @@ const {
   schemasAddress,
 } = require('../helpers/yup_validation/routeHelpersAddress');
 
+const {
+  validateBodyUser,
+  authSchemas,
+} = require('../helpers/yup_validation/routeHelpersUser');
+
 const ClientsController = require('../controllers/clients');
 
 router
@@ -21,6 +26,13 @@ router
       validateBodyClient(schemasClient.clientSchemas),
     ],
     ClientsController.signUp
+  );
+
+router
+  .route('/regKey')
+  .post(
+    validateBodyUser(authSchemas.userSchema),
+    ClientsController.regKey
   );
 
 router

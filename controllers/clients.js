@@ -2,6 +2,7 @@ const Address = require('../models/Address');
 const Client = require('../models/Client');
 const User = require('../models/User');
 
+
 module.exports = {
   create: async (req, res, next) => {
     // Contents of req.value.body, req.value.body
@@ -82,6 +83,36 @@ module.exports = {
     });   
     await newClient.save();
     res.json({ client: 'success', address: 'success' });
+  },
+  regKey: async (req, res, next) => {
+    const { client_key, user_email, user_password } = req.value.body;
+    const client = await Client.findOne({
+        where: {
+          client_key: client_key
+        }
+      });      
+
+    if(!client) {
+      return res.status(404).json({clientKey: 'false'})
+    } else {  
+      const user = await User.findOne({
+        where: {
+          user_email: user_email
+        }
+      });
+
+      if(!user){    
+          const user = await User.create({          
+            user_email,            
+            user_password,
+            clientId: client.id
+          }); 
+          res.status(200).json({'regUser': user})
+
+        } else {
+            res.status(200).json({'regUser': 'User already exists'})
+        }   
+    }
   },
   all: async (req, res, next) => {
     console.log('UsersController.signIn called!');

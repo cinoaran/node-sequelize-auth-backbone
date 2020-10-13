@@ -15,14 +15,6 @@ const User = db.define(
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    user_name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      unique: {
-        args: true,
-        msg: 'Username already in use!',
-      },
-    },
     user_email: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -48,19 +40,33 @@ const User = db.define(
   { timestamps: true }
 );
 
-User.beforeCreate((user, options) => {
+User.beforeCreate(async (user) => {
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(user.user_password, salt);
+    user.user_password = passwordHash;    
+    
+  } catch (error) {
+    console.error(error);
+  }
+  /*   
   return bcrypt
-    .hash(user.userPassword, 10)
+    .hash(user.user_password, 10)
     .then((hash) => {
-      user.userPassword = hash;
+      user.user_password = hash;
     })
     .catch((err) => {
       throw new Error();
-    });
+    }); */
 });
 
-User.prototype.validPassword = async function (userPassword) {
-  return await bcrypt.compare(user_password, this.userPassword);
+User.prototype.validPassword = async function (user_password) { 
+  try {
+    return await bcrypt.compare(user_password, this.user_password);
+  } catch (error) {
+    throw new Error(error)
+  }
+  
 };
 
 User.belongsTo(Client, { foreignKey: 'clientId' });
