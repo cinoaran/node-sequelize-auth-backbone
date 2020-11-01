@@ -23,6 +23,10 @@ const User = db.define(
         msg: 'Email already in use!',
       },
     },
+    user_person: {
+      type: Sequelize.STRING,
+      allowNull: false,      
+    },
     user_password: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -49,20 +53,11 @@ User.beforeCreate(async (user) => {
   } catch (error) {
     console.error(error);
   }
-  /*   
-  return bcrypt
-    .hash(user.user_password, 10)
-    .then((hash) => {
-      user.user_password = hash;
-    })
-    .catch((err) => {
-      throw new Error();
-    }); */
 });
 
-User.prototype.validPassword = async function (user_password) { 
+User.prototype.validPassword = async function (userPassword) {   
   try {
-    return await bcrypt.compare(user_password, this.user_password);
+    return await bcrypt.compare(userPassword, this.user_password);
   } catch (error) {
     throw new Error(error)
   }

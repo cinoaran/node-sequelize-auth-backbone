@@ -1,119 +1,112 @@
 const Address = require('../models/Address');
 const Client = require('../models/Client');
-const User = require('../models/User');
-
 
 module.exports = {
   create: async (req, res, next) => {
     // Contents of req.value.body, req.value.body
     const {
-      address_street,
-      address_zip,
-      address_city,
-      address_country, 
-      client_key,    
-      client_company,
-      client_person,
-      client_email,
-      client_phone,
-      client_fax,
-      client_mobile,
-      client_range,
+      addressStreet,
+      addressZip,
+      addressCity,
+      addressCountry, 
+      clientKey,    
+      clientCompany,
+      clientPerson,
+      clientEmail,
+      clientPhone,
+      clientFax,
+      clientMobile,
+      clientText,
+      clientRange,
     } = req.value.body;
 
     const newAddress = Address.build({
-      address_street,
-      address_zip,
-      address_city,
-      address_country,
+      addressStreet,
+      addressZip,
+      addressCity,
+      addressCountry,
     });    
-    const createAddress = await newAddress.save();
+  
     
     const newClient = Client.build({
-      client_key,
-      client_company,
-      client_person,
-      client_email,
-      client_phone,
-      client_fax,
-      client_mobile,
-      client_range,
+      clientKey,
+      clientCompany,
+      clientPerson,
+      clientEmail,
+      clientPhone,
+      clientFax,
+      clientMobile,
+      clientText,
+      clientRange,
       addressId: createAddress.id
     });
-        
-    await newClient.save();
-    res.json({ client: 'success', address: 'success' });
-  },
-  signUp: async (req, res, next) => {
-
-    // Contents of req.value.body, req.value.body from /clients/signup    
-    const {
-      address_street,
-      address_zip,
-      address_city,
-      address_country, 
-      client_key,    
-      client_company,
-      client_person,
-      client_email,
-      client_phone,
-      client_fax,
-      client_mobile,
-      client_range,
-    } = req.value.body;
-
-    const newAddress = Address.build({
-      address_street,
-      address_zip,
-      address_city,
-      address_country,
-    });    
-    
-    const createAddress = await newAddress.save();
-    const newClient = Client.build({
-      client_key,
-      client_company,
-      client_person,
-      client_email,
-      client_phone,
-      client_fax,
-      client_mobile,
-      client_range,
-      addressId: createAddress.id
-    });   
-    await newClient.save();
-    res.json({ client: 'success', address: 'success' });
-  },
-  regKey: async (req, res, next) => {
-    const { client_key, user_email, user_password } = req.value.body;
     const client = await Client.findOne({
-        where: {
-          client_key: client_key
-        }
-      });      
+      where: {
+        client_email: clientEmail
+      }
+    }); 
+    if(client) {
+      res.status(404).json({ message:'Client already registered!' });
+    }else {
+      await newAddress.save();    
+      await newClient.save();
+      res.json({ client: 'success', address: 'success' });
+    }
+    
+  },
+  signUp: async (req, res, next) => {    
+    const {
+      addressStreet,
+      addressZip,
+      addressCity,
+      addressCountry, 
+      clientKey,    
+      clientCompany,
+      clientPerson,
+      clientEmail,
+      clientPhone,
+      clientFax,
+      clientMobile,
+      clientText,
+      clientRange,
+    } = req.value.body; 
 
-    if(!client) {
-      return res.status(404).json({clientKey: 'false'})
+    const client = await Client.findOne({
+      where: {
+        client_email: clientEmail
+      }
+    });
+
+    if(client) {
+      
+      res.status(302).json({ message: 'Client already registered!' });
+    
     } else {  
-      const user = await User.findOne({
-        where: {
-          user_email: user_email
-        }
+
+      const createAddress = await Address.create({
+        address_street : addressStreet,
+        address_zip : addressZip,
+        address_city : addressCity,
+        address_country : addressCountry,
+      });  
+
+      await Client.create({
+        client_key : clientKey,
+        client_company : clientCompany,
+        client_person : clientPerson,
+        client_email : clientEmail,
+        client_phone : clientPhone,
+        client_fax : clientFax,
+        client_mobile : clientMobile,
+        client_text : clientText,
+        client_range : clientRange,
+        addressId: createAddress.id
       });
 
-      if(!user){    
-          const user = await User.create({          
-            user_email,            
-            user_password,
-            clientId: client.id
-          }); 
-          res.status(200).json({'regUser': user})
-
-        } else {
-            res.status(200).json({'regUser': 'User already exists'})
-        }   
+      res.status(200).json({ message: 'We will send you your Registry Key to confirm your credentials!'});
     }
   },
+  
   all: async (req, res, next) => {
     console.log('UsersController.signIn called!');
   },

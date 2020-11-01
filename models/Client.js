@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const db = require('../config/database');
 const Address = require('./Address');
-const User = require('./User');
+
 
 
 const Client = db.define(
@@ -20,21 +20,27 @@ const Client = db.define(
     },
     client_company: {
       type: Sequelize.STRING,
-    },
-    client_person: {
-      type: Sequelize.STRING,
-    },
+      allowNull: false,
+    },    
     client_email: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
     client_phone: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
     client_fax: {
       type: Sequelize.STRING,
+      allowNull: false,
     },
     client_mobile: {
       type: Sequelize.STRING,
+      allowNull: false,
+    },
+    client_text: {
+      type: Sequelize.TEXT,
+      allowNull: true,
     },
     client_range: {
       type: Sequelize.INTEGER,

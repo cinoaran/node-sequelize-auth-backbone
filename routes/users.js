@@ -10,11 +10,16 @@ const {
 
 const UsersController = require('../controllers/users');
 
-const passportSignIn = passport.authenticate('local', { session: false });
+const passportSignIn = passport.authenticate('local', { session: false })
 const passportJWT = passport.authenticate('jwt', { session: false })
 
 router.route('/signin').post(validateBodyUser(authSchemas.userSchema), passportSignIn, UsersController.signIn);
 
-router.route('/secret').get(passportJWT, UsersController.secret);
+router
+  .route('/regkey')
+  .post(
+    validateBodyUser(authSchemas.userSchema),
+    UsersController.regKey
+  );
 
 module.exports = router;

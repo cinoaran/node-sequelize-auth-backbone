@@ -23,25 +23,15 @@ router
   .post(
     [
       validateBodyAddress(schemasAddress.addressSchemas),
-      validateBodyClient(schemasClient.clientSchemas),
+      validateBodyClient(schemasClient.clientSchemas)
     ],
     ClientsController.signUp
   );
 
 router
-  .route('/regKey')
-  .post(
-    validateBodyUser(authSchemas.userSchema),
-    ClientsController.regKey
-  );
-
-router
   .route('/create')
-  .post(
-    [
-      validateBodyAddress(schemasAddress.addressSchemas),
-      validateBodyClient(schemasClient.clientSchemas),
-    ],
+  .post(    
+    validateBodyClient(schemasClient.clientSchemas),    
     ClientsController.create
   );
 

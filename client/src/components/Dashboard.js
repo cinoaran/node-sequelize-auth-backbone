@@ -1,10 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getDashBoard } from '../actions/';
 
-const Dashboard = () => {
+import '../../src/main.css';
+
+const Dashboard = (props) => {
+
+    const { isAuthenticated, token } = props.auth;
+    const { dashboard } = props.dash;
+    const {getDashBoard} = props;
+
+    useEffect(() => {
+        if(isAuthenticated && token) {
+            getDashBoard();
+        }
+    },[isAuthenticated, token, getDashBoard]);
+    
     return (
         <div>
-            Dashboard Component
+            Dashboard Component:
+            The BA Data for Dasboard component is:
+            <hr/>
+            <h1>{dashboard.secret}</h1>
         </div>
     )
 }
-export default Dashboard;
+
+const mapStateToProps = (state)=>{
+    return {  
+      auth: state.auth,
+      dash: state.dash                            
+    }
+  }
+
+export default connect(mapStateToProps, { getDashBoard })(Dashboard);

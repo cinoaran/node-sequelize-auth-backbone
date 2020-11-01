@@ -35,30 +35,31 @@ passport.use(new JWTStrategy({
 
 passport.use(new LocalStrategy({
     // Assumes username password check
-    usernameField: 'user_email',
-    passwordField: 'user_password'
+    usernameField: 'userEmail',
+    passwordField: 'userPassword'
 
-}, async(user_email, user_password, done) => {
+}, async(userEmail, userPassword, done) => {    
 
-    try {        
+    try {     
             // Find user given email
-            const user = await User.findOne({where: {user_email: user_email}});            
+            const user = await User.findOne({where: {user_email: userEmail}});          
 
             // if not handle it
             if(!user){
                 return done(null, false);
             }
 
+            
             // Check pw is correct
-            const passwordMatch = await user.validPassword(user_password);
-
+            const passwordMatch = await user.validPassword(userPassword);
+            
             // if not handle it
             if(!passwordMatch){
                 return done(null, false);
             }
 
             // Otherwise, return the user
-            done(null, user);
+            done(null, user);            
         
     } catch (error) {
         done(error, false);

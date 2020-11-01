@@ -36,10 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 app.use('/users', require('./routes/users'));
 app.use('/clients', require('./routes/clients'));
-
-// app.use('/api/auth', require('./routes/api/auth'));
-// User Routes
-// app.use('/api/users', require('./routes/api/users'));
+app.use('/dashboard', require('./routes/dashboard'));
 
 // Catch 404 errors and forward them to error handler
 app.use((req, res, next) => {
@@ -60,7 +57,7 @@ app.use((err, req, res, next) => {
     },
   });
 });
-/*db.sync({ force: true })*/ 
+/*db.sync({ force: true }) */
 db.sync()
   .then((result) => {
     app.listen(PORT, console.log(`Running on port: ${PORT}`));
