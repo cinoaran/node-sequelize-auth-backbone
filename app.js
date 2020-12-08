@@ -57,7 +57,8 @@ app.use((err, req, res, next) => {
     },
   });
 });
-/*db.sync({ force: true }) */
+
+/*db.sync({ force: true })*/
 db.sync()
   .then((result) => {
     app.listen(PORT, console.log(`Running on port: ${PORT}`));
